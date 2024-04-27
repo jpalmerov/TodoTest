@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "302eb0848e4110d22667eeb013c802ac",
+    "content-hash": "bded7b200e2a99ba6448c614b73a5773",
     "packages": [
         {
             "name": "brick/math",
@@ -2270,6 +2270,48 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2024-03-12T16:33:42+00:00"
+        },
+        {
+            "name": "jichangfeng/pgsql",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jichangfeng/pgsql.git",
+                "reference": "7153938b7e268948259ee0799704b90375131137"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jichangfeng/pgsql/zipball/7153938b7e268948259ee0799704b90375131137",
+                "reference": "7153938b7e268948259ee0799704b90375131137",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pdo": "*",
+                "ext-pdo_pgsql": "*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Workerman\\PostgreSQL\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Long-living PostgreSQL connection for daemon.",
+            "homepage": "http://www.workerman.net",
+            "keywords": [
+                "pdo",
+                "pdo_pgsql",
+                "pgsql"
+            ],
+            "support": {
+                "issues": "https://github.com/jichangfeng/pgsql/issues",
+                "source": "https://github.com/jichangfeng/pgsql/tree/v1.1"
+            },
+            "time": "2021-02-26T10:07:04+00:00"
         },
         {
             "name": "laravel/lumen-framework",

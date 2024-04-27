@@ -20,3 +20,19 @@ $router->get('/', function () use ($router) {
 $router->post('user/login', 'UserController@login');
 
 $router->post('user/create', 'UserController@create');
+
+$router->post('todo/create', 'TodoController@create');
+
+$router->post('todo/update', 'TodoController@update');
+
+$router->post('todo/delete', 'TodoController@delete');
+
+$router->post('todo/add_item', 'TodoController@addItem');
+
+$router->post('todo/items', 'TodoController@items');
+
+$router->post('todo/delete_item', 'TodoController@deleteItem');
+
+$router->post('todo/update_item', 'TodoController@updateItem');
+
+$router->post('todo/item', 'TodoController@item');
