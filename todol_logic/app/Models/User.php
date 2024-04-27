@@ -13,12 +13,24 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory;
 
+    // constructor
+    public function __construct()
+    {
+        parent::__construct();
+        $this->table = 'users';
+    }
+
     public string $password;
     public string $username;
     public int $id;
 
     public static function where(string $column, string $username): User
     {
-        self::query()->where($column, $username)->first();
+        $userSQL = self::query()->where($column, $username)->first();
+        $user = new User();
+        $user->id = $userSQL->columns['id'];
+        $user->username = $userSQL->columns['username'];
+        $user->password = $userSQL->columns['password'];
+        return $user;
     }
 }
