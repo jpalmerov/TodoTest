@@ -15,15 +15,16 @@ class UserController extends Controller
 
         $user = User::where('username', $username);
 
-        if (hash('sha256', $password) === $user->password
-            && $user->username === $username) {
+        if ($user !== null
+            && hash('sha256', $password) === $user->hidden['password']
+            && $user->fillable['username'] === $username) {
 
             return response()->json([
                 'status' => 'success',
                 'message' => 'Login success',
                 'data' => [
-                    'username' => $user->username,
-                    'id' => $user->id
+                    'username' => $user->fillable['username'],
+                    'id' => $user->fillable['id']
                 ]
             ]);
         } else {
@@ -38,20 +39,29 @@ class UserController extends Controller
     public function create(Request $request): JsonResponse
     {
         $username = $request->input('username');
-        $password = $request->input('password');
+        $password = hash('sha256', $request->input('password'));
 
-        $user = new User();
-        $user->username = $username;
-        $user->password = hash('sha256', $password);
-        $user->save();
+        $user = User::where('username', $username);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'User created',
-            'data' => [
-                'username' => $user->username,
-                'id' => $user->id
-            ]
-        ]);
+        if ($user === null) {
+            $user = new User();
+            $user->fillable['username'] = $username;
+            $user->hidden['password'] = hash('sha256', $password);
+            $user->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User created',
+                'data' => [
+                    'username' => $user->fillable['username'],
+                    'id' => $user->fillable['id']
+                ]
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User already exists'
+            ]);
+        }
     }
 }
