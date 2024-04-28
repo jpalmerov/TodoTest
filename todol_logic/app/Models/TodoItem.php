@@ -11,7 +11,7 @@ class TodoItem extends Model
     public $timestamps = false;
 
     public $fillable = [
-        'id', 'name', 'status'
+        'id', 'todo_id', 'name', 'status'
     ];
 
     public static function get(int $id): TodoItem|null
@@ -26,34 +26,24 @@ class TodoItem extends Model
         $todoItem->fillable['id'] = $todoItemSQL['id'];
         $todoItem->fillable['name'] = $todoItemSQL['name'];
         $todoItem->fillable['status'] = $todoItemSQL['status'];
+        $todoItem->fillable['todo_id'] = $todoItemSQL['todo_id'];
         return $todoItem;
-    }
-
-    public function save(array $options = []): bool
-    {
-        $name = $this->fillable['name'];
-        $status = $this->fillable['status'];
-
-        return TodoItem::query()->insert([
-            'name' => $name,
-            'status' => $status
-        ]);
     }
 
     public function data(): array
     {
         return [
             'id' => $this->fillable['id'],
+            'todo_id' => $this->fillable['todo_id'],
             'name' => $this->fillable['name'],
             'status' => $this->fillable['status']
         ];
     }
 
-    public function updateStatus(TodoItemStatus $status): bool
+    public static function updateStatus(int $id, TodoItemStatus $status): bool
     {
-        return TodoItem::query()->where('id', $this->fillable['id'])->update([
-            'name' => $this->fillable['name'],
-            'status' => $this->fillable['status']
+        return TodoItem::query()->where('id', $id)->update([
+            'status' => $status->value
         ]);
     }
 }

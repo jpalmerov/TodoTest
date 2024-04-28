@@ -1,0 +1,117 @@
+### --- user ---
+
+### Create user
+POST localhost:8000/index.php/user/create
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "password"
+}
+
+### Login
+POST localhost:8000/index.php/user/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "password"
+}
+
+### --- todo ---
+
+### Create todo list
+POST localhost:8000/index.php/todo/create
+Content-Type: application/json
+
+{
+  "name": "MyTodo_4",
+  "description": "Description",
+  "finish_date": "2024-04-28T00:00:00",
+  "user_id": 4
+}
+
+### List todos
+POST localhost:8000/index.php/todo/list
+Content-Type: application/json
+
+{
+  "user_id": 4
+}
+
+### Delete todo
+POST localhost:8000/index.php/todo/delete
+Content-Type: application/json
+
+{
+  "id": 13
+}
+
+### Update todo
+POST localhost:8000/index.php/todo/update
+Content-Type: application/json
+
+{
+  "id": 14,
+  "name": "MyTodo_2",
+  "description": "Description",
+  "finish_date": "2024-04-28T00:00:00"
+}
+
+### Get todo
+POST localhost:8000/index.php/todo/get
+Content-Type: application/json
+
+{
+  "id": 14
+}
+
+### --- todo_item ---
+
+### Create todo_item
+POST localhost:8000/index.php/todo_item/create
+Content-Type: application/json
+
+{
+  "name": "MyTodoItem_5",
+  "todo_id": 16,
+  "status": "done"
+}
+
+### List todo_items
+POST localhost:8000/index.php/todo_item/list
+Content-Type: application/json
+
+{
+  "todo_id": 16
+}
+
+### Update todo_item
+POST localhost:8000/index.php/todo_item/update
+Content-Type: application/json
+
+{
+  "todo_id": 16,
+  "id": 6,
+  "name": "MyTodoItem_6_updated",
+  "status": "todo"
+}
+
+### Update todo_item status
+POST localhost:8000/index.php/todo_item/update_status
+Content-Type: application/json
+
+{
+  "id":8,
+  "status": "in_progress"
+}
+
+### Delete todo_item
+POST localhost:8000/index.php/todo_item/delete
+Content-Type: application/json
+
+{
+  "todo_id": 16,
+  "id": 6
+}
+

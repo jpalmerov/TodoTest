@@ -52,7 +52,7 @@ class UserController extends Controller
                     'message' => 'User not created'
                 ]);
             }
-
+            
             $user = User::get($username);
 
             return response()->json([

@@ -12,7 +12,7 @@ class Todo extends Model
     public $timestamps = false;
 
     public $fillable = [
-        'id', 'name', 'description', 'finish_date', 'todo_item_count'
+        'id', 'user_id', 'name', 'description', 'finish_date', 'todo_item_count'
     ];
 
     public function data(): array
@@ -43,56 +43,4 @@ class Todo extends Model
         return $todo;
     }
 
-    public function itemCount(): int
-    {
-        return $this->fillable['todo_item_count'];
-    }
-
-    public function addItem(string $name, string $status): TodoItem|null
-    {
-        if ($this->itemCount() >= 10) {
-            return null;
-        }
-        $itemSQL = TodoItem::query()->create([
-            'name' => $name,
-            'status' => $status,
-            'todo_id' => $this->fillable['id']
-        ]);
-        $item = new TodoItem();
-        $item->fillable['id'] = $itemSQL['id'];
-        $item->fillable['name'] = $itemSQL['name'];
-        $item->fillable['status'] = $itemSQL['status'];
-        $item->fillable['todo_id'] = $itemSQL['todo_id'];
-
-        # update the item count
-        $this->fillable['todo_item_count'] = $this->itemCount() + 1;
-
-        return $item;
-    }
-
-    public function items(): array
-    {
-        $itemsSQL = TodoItem::query()->where('todo_id', $this->fillable['id'])->get();
-        $items = [];
-        foreach ($itemsSQL as $itemSQL) {
-            $item = new TodoItem();
-            $item->fillable['id'] = $itemSQL['id'];
-            $item->fillable['name'] = $itemSQL['name'];
-            $item->fillable['status'] = $itemSQL['status'];
-            $item->fillable['todo_id'] = $itemSQL['todo_id'];
-            $items[] = $item;
-        }
-        return $items;
-    }
-
-    public function delete(): bool
-    {
-        $deleted = Todo::query()->where('id', $this->fillable['id'])->delete();
-        if ($deleted) {
-            TodoItem::query()->where('todo_id', $this->fillable['id'])->delete();
-            # update the item count
-            $this->fillable['todo_item_count'] = 0;
-        }
-        return $deleted;
-    }
 }

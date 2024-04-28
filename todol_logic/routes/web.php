@@ -17,22 +17,32 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+# --- user ---
+
 $router->post('user/login', 'UserController@login');
 
 $router->post('user/create', 'UserController@create');
 
-$router->post('todo/create', 'TodoController@create');
+# --- todo ---
 
-$router->post('todo/update', 'TodoController@update');
+$router->post('todo/create', 'TodoController@create');
 
 $router->post('todo/delete', 'TodoController@delete');
 
-$router->post('todo/add_item', 'TodoController@addItem');
+$router->post('todo/update', 'TodoController@update');
 
-$router->post('todo/items', 'TodoController@items');
+$router->post('todo/list', 'TodoController@list');
 
-$router->post('todo/delete_item', 'TodoController@deleteItem');
+$router->post('todo/get', 'TodoController@get');
 
-$router->post('todo/update_item', 'TodoController@updateItem');
+# --- todo_item ---
 
-$router->post('todo/item', 'TodoController@item');
+$router->post('todo_item/create', 'TodoController@createItem');
+
+$router->post('todo_item/list', 'TodoController@listItems');
+
+$router->post('todo_item/delete', 'TodoController@deleteItem');
+
+$router->post('todo_item/update', 'TodoController@updateItem');
+
+$router->post('todo_item/update_status', 'TodoController@updateItemStatus');
