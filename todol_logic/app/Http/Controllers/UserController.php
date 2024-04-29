@@ -16,7 +16,7 @@ class UserController extends Controller
         $user = User::get($username);
 
         if ($user !== null
-            && hash('sha256', $password) === $user->hidden['password']
+            && $password === $user->hidden['password']
             && $user->fillable['username'] === $username) {
 
             return response()->json([
@@ -36,7 +36,7 @@ class UserController extends Controller
     public function create(Request $request): JsonResponse
     {
         $username = $request->input('username');
-        $password = hash('sha256', $request->input('password'));
+        $password = $request->input('password');
 
         $user = User::get($username);
 
@@ -52,7 +52,7 @@ class UserController extends Controller
                     'message' => 'User not created'
                 ]);
             }
-            
+
             $user = User::get($username);
 
             return response()->json([
