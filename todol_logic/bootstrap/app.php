@@ -13,6 +13,7 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 | Create The Application
 |--------------------------------------------------------------------------
 |
+
 | Here we will load the environment and create the application instance
 | that serves as the central piece of this framework. We'll use this
 | application as an "IoC" container and router for this framework.
@@ -25,7 +26,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 
- $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -74,9 +75,9 @@ $app->configure('database');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+$app->middleware([
+    App\Http\Middleware\CORSMiddleware::class
+]);
 
 // $app->routeMiddleware([
 //    'auth' => App\Http\Middleware\Authenticate::class,
@@ -94,6 +95,7 @@ $app->configure('database');
 */
 
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);

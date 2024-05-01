@@ -21,6 +21,8 @@ $router->get('/', function () use ($router) {
 
 $router->post('user/login', 'UserController@login');
 
+$router->post('user/logout', 'UserController@login');
+
 $router->post('user/create', 'UserController@create');
 
 # --- todo ---

@@ -10,21 +10,31 @@ class UserController extends Controller
 {
     public function login(Request $request): JsonResponse
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
+        try {
 
-        $user = User::get($username);
+            $username = $request->input('username');
+            $password = $request->input('password');
 
-        if ($user !== null
-            && $password === $user->hidden['password']
-            && $user->fillable['username'] === $username) {
+            $user = User::get($username);
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Login success',
-                'data' => $user->data()
-            ]);
-        } else {
+            if ($user !== null
+                && $password === $user->hidden['password']
+                && $user->fillable['username'] === $username) {
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Login success',
+                    'data' => $user->data()
+                ]);
+            } else {
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Login failed'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            printf($th);
             return response()->json([
                 'status' => 'error',
                 'message' => 'Login failed'
