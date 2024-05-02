@@ -120,4 +120,26 @@ export class ItemsComponent {
     })
   }
 
+  getStatusBtnClass(status: TodoItemStatus) {
+    switch(status) {
+      case TodoItemStatus.todo:
+        return 'btn-primary'
+      case TodoItemStatus.in_progress:
+        return 'btn-warning'
+      case TodoItemStatus.done:
+        return 'btn-success'
+    }
+  }
+
+  getStatusText(status: TodoItemStatus) {
+    switch(status) {
+      case TodoItemStatus.todo:
+        return '📌 Todo'
+      case TodoItemStatus.in_progress:
+        return '🔨 In Progress'
+      case TodoItemStatus.done:
+        return '✅ Done'
+    }
+  }
+
 }
