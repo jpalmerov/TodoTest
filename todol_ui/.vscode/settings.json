@@ -3,5 +3,8 @@
     "editor.lineHeight": 1.2,
     "debug.console.fontSize": 14,
     "terminal.integrated.fontSize": 14,
-    "terminal.integrated.lineHeight": 1
+    "terminal.integrated.lineHeight": 1,
+    "workbench.tree.indent": 4,
+    "editor.tabSize": 2,
+    "editor.indentSize": 2
 }

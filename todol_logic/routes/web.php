@@ -41,10 +41,12 @@ $router->post('todo/get', 'TodoController@get');
 
 $router->post('todo_item/create', 'TodoController@createItem');
 
+$router->post('todo_item/create_various', 'TodoController@createItems');
+
 $router->post('todo_item/list', 'TodoController@listItems');
 
 $router->post('todo_item/delete', 'TodoController@deleteItem');
 
-$router->post('todo_item/update', 'TodoController@updateItem');
+$router->post('todo_item/update_various', 'TodoController@updateItems');
 
 $router->post('todo_item/update_status', 'TodoController@updateItemStatus');

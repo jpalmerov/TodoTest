@@ -98,4 +98,8 @@ export class AuthService {
     return (this.userId != undefined) && this.userId >= 0
   }
 
+  public getUserId(): number | undefined {
+    return this.userId
+  }
+
 }

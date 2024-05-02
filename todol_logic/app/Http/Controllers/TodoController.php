@@ -201,6 +201,61 @@ class TodoController extends Controller
         ]);
     }
 
+    public function createItems(Request $request): JsonResponse
+    {
+        $items = $request->input('items');
+        $insertedItems = [];
+
+        foreach ($items as $item) {
+            $todo_id = $item['todo_id'];
+            $name = $item['name'];
+            $status = $item['status'] ?? TodoItemStatus::TODO->value;
+            $todoItemStatus = TodoItemStatus::fromValue($status);
+
+            $itemsSQL = TodoItem::query()->where('todo_id', $todo_id)->get();
+
+            // Max 10 items
+            if (count($itemsSQL) == 10) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'You can only have 10 Todo items in this list.',
+                ]);
+            }
+
+            // Check if item already exists
+            foreach ($itemsSQL as $itemSQL) {
+                if ($itemSQL['name'] == $name) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'There is already a Todo item with the name' . $name . ' in this list.'
+                    ]);
+                }
+            }
+
+            try {
+                $insertedItems[] = TodoItem::query()->create([
+                    'name' => $name,
+                    'status' => $todoItemStatus->value,
+                    'todo_id' => $todo_id
+                ]);
+            } catch (Exception $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $e->getMessage(),
+                ]);
+            }
+
+
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Todo item created.',
+            'data' => $insertedItems
+        ]);
+
+    }
+
     public function listItems(Request $request): JsonResponse
     {
         $todo_id = $request->input('todo_id');
@@ -221,30 +276,32 @@ class TodoController extends Controller
         ]);
     }
 
-    public function updateItem(Request $request): JsonResponse
+    public function updateItems(Request $request): JsonResponse
     {
-        $id = $request->input('id');
-        $todo_id = $request->input('todo_id');
-        $name = $request->input('name');
-        $status = $request->input('status') ?? TodoItemStatus::TODO->value;
-        $todoItemStatus = TodoItemStatus::fromValue($status);
+        $itemArray = $request->input('items');
+        $updateSQL = 0;
+        foreach ($itemArray as $item) {
+            $id = $item['id'];
+            $todo_id = $item['todo_id'];
+            $name = $item['name'];
+            $status = $item['status'] ?? TodoItemStatus::TODO->value;
+            $todoItemStatus = TodoItemStatus::fromValue($status);
 
-        $itemsSQL = TodoItem::query()->where('todo_id', $todo_id)->get();
-
-        // Check if item already exists
-        foreach ($itemsSQL as $itemSQL) {
-            if ($itemSQL['name'] == $name) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'There is already a Todo item with the same name in this list.'
-                ]);
+            $itemsSQL = TodoItem::query()->where('todo_id', $todo_id)->get();
+            // Check if item already exists
+            foreach ($itemsSQL as $itemSQL) {
+                if ($itemSQL['name'] == $name) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'There is already a Todo item with the name "' . $name . '" in this list.'
+                    ]);
+                }
             }
+            $updateSQL += TodoItem::query()->where('id', $id)->update([
+                'name' => $name,
+                'status' => $todoItemStatus->value
+            ]);
         }
-
-        $updateSQL = TodoItem::query()->where('id', $id)->update([
-            'name' => $name,
-            'status' => $todoItemStatus->value
-        ]);
 
         if ($updateSQL === 0) {
             return response()->json([
@@ -252,7 +309,6 @@ class TodoController extends Controller
                 'message' => 'Todo item not updated.',
             ]);
         }
-
         return response()->json([
             'status' => 'success',
             'message' => 'Todo item updated.',

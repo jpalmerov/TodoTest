@@ -16,7 +16,11 @@ export class LoginComponent {
         password: new FormControl('', [Validators.required]),
     })
 
-    constructor(private auth: AuthService, private router: Router) { }
+    constructor(private auth: AuthService, private router: Router) {
+        if (auth.isLoggedIn()) {
+            router.navigate(['/dashboard', 'todo_list'])
+        }
+    }
 
     login() {
         const component = this;
@@ -24,8 +28,8 @@ export class LoginComponent {
         const passwordVal = this.profileForm.get('password')?.value
         console.log(`formValues: ${usernameVal}, ${passwordVal}`)
         const result = this.auth.login(usernameVal, passwordVal).then((value) => {
-            if (typeof (value) === typeof(1)) {
-                this.router.navigate(['/dashboard'])
+            if (typeof (value) === typeof (1)) {
+                this.router.navigate(['/dashboard', 'todo_list'])
             }
         }).catch((err) => {
             component.errorMessage = (typeof (err) === typeof ("")) ? err : "Unknown error. Please try again."

@@ -22,7 +22,7 @@ export const environment = {
         todoItem: {
             create: `${apiTodoItemBaseUrl}/create`,
             delete: `${apiTodoItemBaseUrl}/delete`,
-            update: `${apiTodoItemBaseUrl}/update`,
+            update: `${apiTodoItemBaseUrl}/update_various`,
             list: `${apiTodoItemBaseUrl}/list`,
             updateStatus: `${apiTodoItemBaseUrl}/update_status`,
         },

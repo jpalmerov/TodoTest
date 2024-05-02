@@ -25,8 +25,8 @@ POST localhost:8000/index.php/todo/create
 Content-Type: application/json
 
 {
-  "name": "MyTodo_4",
-  "description": "Description",
+  "name": "Aplastar un mojon",
+  "description": "aplastaaaaa",
   "finish_date": "2024-04-28T00:00:00",
   "user_id": 4
 }
@@ -52,9 +52,9 @@ POST localhost:8000/index.php/todo/update
 Content-Type: application/json
 
 {
-  "id": 14,
-  "name": "MyTodo_2",
-  "description": "Description",
+  "id": 18,
+  "name": "Hacer las tareas vago",
+  "description": "Mañana mismo deja eso",
   "finish_date": "2024-04-28T00:00:00"
 }
 
@@ -83,18 +83,22 @@ POST localhost:8000/index.php/todo_item/list
 Content-Type: application/json
 
 {
-  "todo_id": 16
+  "todo_id": 25
 }
 
 ### Update todo_item
-POST localhost:8000/index.php/todo_item/update
+POST localhost:8000/index.php/todo_item/update_various
 Content-Type: application/json
 
 {
-  "todo_id": 16,
-  "id": 6,
-  "name": "MyTodoItem_6_updated",
-  "status": "todo"
+  "items": [
+    {
+      "todo_id": 25,
+      "id": 10,
+      "name": "MyTodoItem_6_updated",
+      "status": "todo"
+    }
+  ]
 }
 
 ### Update todo_item status
