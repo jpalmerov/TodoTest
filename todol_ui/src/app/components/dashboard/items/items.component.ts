@@ -14,7 +14,7 @@ import { TodoService } from 'src/app/services/todo.service';
 })
 export class ItemsComponent {
 
-  public todo!: Todo
+  public todo?: Todo
   public todoItemList: TodoItem[] = []
   public todoItemForm!: FormGroup[]
   public updatedName: boolean = false
@@ -42,7 +42,7 @@ export class ItemsComponent {
   }
 
   loadItems() {
-    this.todoService.getItems(this.todo.id).then((items) => {
+    this.todoService.getItems(this.todo!.id).then((items) => {
       this.todoItemForm = items.map((item: TodoItem) => new FormGroup({
         name: new FormControl(item.name, [Validators.required]),
       }))
@@ -88,7 +88,7 @@ export class ItemsComponent {
   addItem() {
     const name = this.todoItemAddFormControl.value
     if (name != '') {
-      this.todoService.createItem(this.todo.id, name, TodoItemStatus.todo)
+      this.todoService.createItem(this.todo!.id, name, TodoItemStatus.todo)
         .then((item) => {
           this.todoItemList.push(item)
           this.todoItemForm.push(new FormGroup({
